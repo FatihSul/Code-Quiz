@@ -13,6 +13,9 @@ var timerInterval;
 var secondsLeft = 80;
 let currentQuestion = 0
 
+
+
+// quiz questions in order
 const questions = [
     {   question: "What does HTML stand for?",
         answers: [
@@ -51,7 +54,7 @@ const questions = [
     ]}
 ]
 
-
+// beginning of the quiz
 function startGame(){
     questionContainer.classList.remove("hide")
     header.classList.add("hide")
@@ -63,15 +66,20 @@ function startGame(){
     console.log("here")
 }
 
+
+// reads if youve got to 0 seconds or the end to then end the game & if not then continue to the next
 function nextQuestion(currentQuestion){
     if(secondsLeft <= 0 || currentQuestion == 5){
         endQuiz()
+        timer.textContent = "Your score: " + secondsLeft
         console.log("game over")
     } else {
         showQuestion(questions[currentQuestion])
     }
 }
 
+
+// loads the next question and answers after removing the previous answer buttons
 function showQuestion(question){
     answerButtons.innerHTML = ""
     quizQuestions.innerText = question.question
@@ -86,6 +94,8 @@ function showQuestion(question){
     }
 }
 
+
+// checks to see if the chosen answer is correct and if not then deduct seconds/points from your total
 function checkAnswer(event){
     console.log(event.target.dataset.correct)
     if (event.target.dataset.correct == "true"){
@@ -102,10 +112,11 @@ function checkAnswer(event){
     }
 }
 
+// sets the timer on start
 function setTime(){
     timerInterval = setInterval(
       function() {
-        secondsLeft--;      //secondsLeft -= 1
+        secondsLeft--; 
         timer.textContent = "Timer: " + secondsLeft + " seconds left"
         
         if (secondsLeft === 0){
@@ -116,17 +127,14 @@ function setTime(){
     )
   }
 
+// pulls up the ending screen
 function endQuiz(){
     clearInterval(timerInterval)
     questionContainer.classList.add("hide")
     endScreen.classList.remove("hide")
-    // JSON the submittion to save the initials for highscore
 }
 
 
 startButton.addEventListener("click", startGame)
 answerButtons.addEventListener("click", checkAnswer)
-// submitButton.addEventListener("click", )
-
-
-
+// submitButton.addEventListener("click", saveScore)
