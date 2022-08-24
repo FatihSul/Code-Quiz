@@ -6,8 +6,6 @@ const questionContainer = document.getElementById("question-container")
 const quizQuestions = document.getElementById("question")
 const answerButtons = document.getElementById("answer-buttons")
 const endScreen = document.getElementById("endScreen")
-const submitButton = document.getElementById("submit-btn")
-
 
 var timerInterval;
 var secondsLeft = 80;
@@ -138,3 +136,18 @@ function endQuiz(){
 startButton.addEventListener("click", startGame)
 answerButtons.addEventListener("click", checkAnswer)
 // submitButton.addEventListener("click", saveScore)
+
+function saveScore(){
+    const initials = document.querySelector(".form-control").value
+    const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+    const score = {
+        score: secondsLeft,
+        initials
+    };
+    console.log(highScores)
+    highScores.push(score);
+    highScores.sort((a, b) => b.score - a.score);
+    highScores.splice(5);
+    localStorage.setItem("highScores", JSON.stringify(highScores))
+    console.log(initials)
+}
